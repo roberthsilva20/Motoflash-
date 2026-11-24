@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Motoflash</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f4f4;
+      color: #222;
+    }
+
+    header {
+      background: #111;
+      color: #fff;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      color: #ffcc00;
+    }
+
+    .menu {
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #111, #292929);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 span {
+      color: #ffcc00;
+    }
+
+    .hero p {
+      font-size: 16px;
+      color: #ddd;
+      margin-bottom: 25px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #ffcc00;
+      color: #111;
+      padding: 14px 25px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 25px 18px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    .card h2 {
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+
+    .card p {
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 7px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: #ffcc00;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .service {
+      background: #fafafa;
+      border: 2px solid #eee;
+      border-radius: 10px;
+      padding: 18px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .service:hover {
+      border-color: #ffcc00;
+    }
+
+    .service.selected {
+      border-color: #ffcc00;
+      background: #fff8d6;
+    }
+
+    .service-icon {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .service-name {
+      font-weight: bold;
+    }
+
+    .price {
+      margin-top: 5px;
+      color: #777;
+      font-size: 13px;
+    }
+
+    .result {
+      display: none;
+      margin-top: 20px;
+      padding: 18px;
+      background: #111;
+      color: white;
+      border-radius: 10px;
+    }
+
+    .result h3 {
+      color: #ffcc00;
+      margin-bottom: 10px;
+    }
+
+    footer {
+      background: #111;
+      color: #aaa;
+      text-align: center;
+      padding: 25px 15px;
+      margin-top: 20px;
+      font-size: 13px;
+    }
+
+    .status {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: #d9ffd9;
+      color: #168316;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    @media (max-width: 400px) {
+      .hero h1 {
+        font-size: 27px;
+      }
+
+      .services {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Moto<span>flash</span></div>
+  <div class="menu">☰</div>
+</header>
+
+<section class="hero">
+  <h1>Entrega rápida com a <span>Motoflash</span></h1>
+  <p>Solicite sua entrega de moto de forma rápida, simples e segura.</p>
+  <a href="#pedido" class="btn">Fazer pedido</a>
+</section>
+
+<div class="container">
+
+  <div class="card">
+    <h2>📦 Nossos serviços</h2>
+    <p>Escolha o serviço que você precisa.</p>
+
+    <div class="services">
+
+      <div class="service" onclick="selecionarServico(this, 'Entrega comum')">
+        <div class="service-icon">🏍️</div>
+        <div class="service-name">Entrega comum</div>
+        <div class="price">A partir de R$ 10</div>
+      </div>
+
+      <div class="service" onclick="selecionarServico(this, 'Entrega rápida')">
+        <div class="service-icon">⚡</div>
+        <div class="service-name">Entrega rápida</div>
+        <div class="price">A partir de R$ 15</div>
+      </div>
+
+      <div class="service" onclick="selecionarServico(this, 'Documentos')">
+        <div class="service-icon">📄</div>
+        <div class="service-name">Documentos</div>
+        <div class="price">A partir de R$ 10</div>
+      </div>
+
+      <div class="service" onclick="selecionarServico(this, 'Mercadorias')">
+        <div class="service-icon">📦</div>
+        <div class="service-name">Mercadorias</div>
+        <div class="price">A partir de R$ 12</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card" id="pedido">
+    <h2>📍 Solicitar entrega</h2>
+
+    <div class="form-group">
+      <label>Nome</label>
+      <input type="text" id="nome" placeholder="Digite seu nome">
+    </div>
+
+    <div class="form-group">
+      <label>Local de retirada</label>
+      <input type="text" id="origem" placeholder="Onde devemos buscar?">
+    </div>
+
+    <div class="form-group">
+      <label>Local de entrega</label>
+      <input type="text" id="destino" placeholder="Onde devemos entregar?">
+    </div>
+
+    <div class="form-group">
+      <label>Forma de pagamento</label>
+
+      <select id="pagamento">
+        <option value="">Selecione</option>
+        <option value="Pix">Pix</option>
+        <option value="Dinheiro">Dinheiro</option>
+        <option value="Cartão">Cartão</option>
+      </select>
+    </div>
+
+    <button class="btn" onclick="solicitarEntrega()">
+      Solicitar Motoflash
+    </button>
+
+    <div class="result" id="resultado">
+      <h3>Pedido recebido! 🏍️</h3>
+      <p id="mensagem"></p>
+      <div class="status">AGUARDANDO MOTOBOY</div>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h2>⚡ Por que escolher a Motoflash?</h2>
+    <p>
+      Entregas rápidas, atendimento simples e praticidade para você.
+      Solicite sua entrega diretamente pelo celular.
+    </p>
+  </div>
+
+</div>
+
+<footer>
+  © 2026 Motoflash<br>
+  Entregas rápidas e seguras.
+</footer>
+
+<script>
+
+  let servicoSelecionado = "";
+
+  function selecionarServico(elemento, servico) {
+
+    document.querySelectorAll(".service").forEach(function(item) {
+      item.classList.remove("selected");
+    });
+
+    elemento.classList.add("selected");
+
+    servicoSelecionado = servico;
+  }
+
+  function solicitarEntrega() {
+
+    const nome = document.getElementById("nome").value.trim();
+    const origem = document.getElementById("origem").value.trim();
+    const destino = document.getElementById("destino").value.trim();
+    const pagamento = document.getElementById("pagamento").value;
+
+    if (nome === "") {
+      alert("Digite seu nome.");
+      return;
+    }
+
+    if (servicoSelecionado === "") {
+      alert("Escolha um serviço.");
+      return;
+    }
+
+    if (origem === "") {
+      alert("Digite o local de retirada.");
+      return;
+    }
+
+    if (destino === "") {
+      alert("Digite o local de entrega.");
+      return;
+    }
+
+    if (pagamento === "") {
+      alert("Selecione a forma de pagamento.");
+      return;
+    }
+
+    const resultado = document.getElementById("resultado");
+    const mensagem = document.getElementById("mensagem");
+
+    mensagem.innerHTML =
+      "Olá, <strong>" + nome + "</strong>!<br><br>" +
+      "Serviço: <strong>" + servicoSelecionado + "</strong><br>" +
+      "Retirada: <strong>" + origem + "</strong><br>" +
+      "Entrega: <strong>" + destino + "</strong><br>" +
+      "Pagamento: <strong>" + pagamento + "</strong><br><br>" +
+      "Seu pedido foi registrado e está aguardando um motoboy.";
+
+    resultado.style.display = "block";
+
+    resultado.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+  }
+
+</script>
+
+</body>
+</html>
