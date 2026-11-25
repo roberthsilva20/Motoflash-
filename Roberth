@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Motoflash</title>
+  <link rel="manifest" href="manifest.json">
 
   <style>
     * {
@@ -260,126 +260,64 @@
 <div class="container">
 
   <div class="tabs">
-
-    <button class="tab active" onclick="mostrarArea('restaurante', this)">
-      🏪 Restaurante
-    </button>
-
-    <button class="tab" onclick="mostrarArea('motoboy', this)">
-      🏍️ Motoboy
-    </button>
-
+    <button class="tab active" onclick="mostrarArea('restaurante', this)">🏪 Restaurante</button>
+    <button class="tab" onclick="mostrarArea('motoboy', this)">🏍️ Motoboy</button>
   </div>
 
-  <!-- RESTAURANTE -->
-
   <div id="restaurante" class="area active">
-
     <div class="card">
-
       <h2>📦 Solicitar motoboy</h2>
-
       <div class="info">
-        A taxa de entrega não pode ser menor que
-        <strong>R$ 7,00</strong>.
+        A taxa de entrega não pode ser menor que <strong>R$ 7,00</strong>.
       </div>
 
       <label>Nome do restaurante</label>
-      <input
-        type="text"
-        id="restauranteNome"
-        placeholder="Ex.: Lanchonete do João"
-      >
+      <input type="text" id="restauranteNome" placeholder="Ex.: Lanchonete do João">
 
       <label>Endereço de retirada</label>
-      <input
-        type="text"
-        id="retirada"
-        placeholder="Onde o motoboy vai buscar?"
-      >
+      <input type="text" id="retirada" placeholder="Onde o motoboy vai buscar?">
 
       <label>Endereço de entrega</label>
-      <input
-        type="text"
-        id="entrega"
-        placeholder="Onde será entregue?"
-      >
+      <input type="text" id="entrega" placeholder="Onde será entregue?">
 
       <label>Valor da taxa de entrega</label>
-      <input
-        type="number"
-        id="taxa"
-        min="7"
-        step="0.01"
-        placeholder="Ex.: 10.00"
-        oninput="calcularValores()"
-      >
+      <input type="number" id="taxa" min="7" step="0.01" placeholder="Ex.: 10.00" oninput="calcularValores()">
 
       <label>Observação</label>
-      <input
-        type="text"
-        id="observacao"
-        placeholder="Ex.: Pedido #125"
-      >
+      <input type="text" id="observacao" placeholder="Ex.: Pedido #125">
 
       <div class="resumo" id="resumo">
-
         <h3>💰 Resumo da entrega</h3>
-
         <div class="valor">
           <span>Taxa da entrega:</span>
           <strong id="valorBruto">R$ 0,00</strong>
         </div>
-
         <div class="valor">
           <span>Comissão Motoflash:</span>
           <strong id="valorComissao">R$ 0,00</strong>
         </div>
-
         <div class="valor">
           <span>Motoboy recebe:</span>
           <strong id="valorMotoboy">R$ 0,00</strong>
         </div>
-
       </div>
 
-      <button class="btn" onclick="criarEntrega()">
-        🚀 Solicitar Motoboy
-      </button>
-
+      <button class="btn" onclick="criarEntrega()">🚀 Solicitar Motoboy</button>
     </div>
 
     <div class="card">
-
       <h2>💳 Plano do restaurante</h2>
-
-      <p>
-        O restaurante paga <strong>R$ 100,00 por mês</strong>
-        para utilizar o Motoflash.
-      </p>
-
+      <p>O restaurante paga <strong>R$ 100,00 por mês</strong> para utilizar o Motoflash.</p>
     </div>
-
   </div>
 
-  <!-- MOTOBOY -->
-
   <div id="motoboy" class="area">
-
     <div class="card">
-
       <h2>🏍️ Entregas disponíveis</h2>
-
       <div id="listaEntregas">
-
-        <div class="vazio">
-          Nenhuma entrega disponível no momento.
-        </div>
-
+        <div class="vazio">Nenhuma entrega disponível no momento.</div>
       </div>
-
     </div>
-
   </div>
 
 </div>
@@ -390,136 +328,61 @@
 </footer>
 
 <script>
-
-  /*
-    COMISSÃO DA MOTOFLASH
-
-    Por enquanto está em 20%.
-    Depois vamos criar uma área administrativa
-    para você poder alterar essa porcentagem.
-  */
-
   const porcentagemMotoflash = 20;
-
   let entregas = [];
 
   function mostrarArea(area, botao) {
-
-    document.querySelectorAll(".area").forEach(function(item) {
-      item.classList.remove("active");
-    });
-
-    document.querySelectorAll(".tab").forEach(function(item) {
-      item.classList.remove("active");
-    });
-
+    document.querySelectorAll(".area").forEach(item => item.classList.remove("active"));
+    document.querySelectorAll(".tab").forEach(item => item.classList.remove("active"));
     document.getElementById(area).classList.add("active");
-
     botao.classList.add("active");
-
-    if (area === "motoboy") {
-      mostrarEntregas();
-    }
+    if (area === "motoboy") mostrarEntregas();
   }
 
   function calcularValores() {
-
-    const taxa = parseFloat(
-      document.getElementById("taxa").value
-    );
-
+    const taxa = parseFloat(document.getElementById("taxa").value);
     const resumo = document.getElementById("resumo");
-
     if (isNaN(taxa) || taxa < 7) {
       resumo.style.display = "none";
       return;
     }
-
-    const comissao =
-      taxa * (porcentagemMotoflash / 100);
-
-    const motoboy =
-      taxa - comissao;
-
-    document.getElementById("valorBruto").innerText =
-      formatarMoeda(taxa);
-
-    document.getElementById("valorComissao").innerText =
-      formatarMoeda(comissao);
-
-    document.getElementById("valorMotoboy").innerText =
-      formatarMoeda(motoboy);
-
+    const comissao = taxa * (porcentagemMotoflash / 100);
+    const motoboy = taxa - comissao;
+    document.getElementById("valorBruto").innerText = formatarMoeda(taxa);
+    document.getElementById("valorComissao").innerText = formatarMoeda(comissao);
+    document.getElementById("valorMotoboy").innerText = formatarMoeda(motoboy);
     resumo.style.display = "block";
   }
 
   function criarEntrega() {
+    const restaurante = document.getElementById("restauranteNome").value.trim();
+    const retirada = document.getElementById("retirada").value.trim();
+    const entrega = document.getElementById("entrega").value.trim();
+    const taxa = parseFloat(document.getElementById("taxa").value);
+    const observacao = document.getElementById("observacao").value.trim();
 
-    const restaurante =
-      document.getElementById("restauranteNome").value.trim();
+    if (!restaurante) return alert("Digite o nome do restaurante.");
+    if (!retirada) return alert("Digite o endereço de retirada.");
+    if (!entrega) return alert("Digite o endereço de entrega.");
+    if (isNaN(taxa) || taxa < 7) return alert("A taxa de entrega não pode ser menor que R$ 7,00.");
 
-    const retirada =
-      document.getElementById("retirada").value.trim();
-
-    const entrega =
-      document.getElementById("entrega").value.trim();
-
-    const taxa =
-      parseFloat(document.getElementById("taxa").value);
-
-    const observacao =
-      document.getElementById("observacao").value.trim();
-
-    if (restaurante === "") {
-      alert("Digite o nome do restaurante.");
-      return;
-    }
-
-    if (retirada === "") {
-      alert("Digite o endereço de retirada.");
-      return;
-    }
-
-    if (entrega === "") {
-      alert("Digite o endereço de entrega.");
-      return;
-    }
-
-    if (isNaN(taxa) || taxa < 7) {
-      alert("A taxa de entrega não pode ser menor que R$ 7,00.");
-      return;
-    }
-
-    const comissao =
-      taxa * (porcentagemMotoflash / 100);
-
-    const valorMotoboy =
-      taxa - comissao;
+    const comissao = taxa * (porcentagemMotoflash / 100);
+    const valorMotoboy = taxa - comissao;
 
     const novaEntrega = {
-
       id: Date.now(),
-
-      restaurante: restaurante,
-
-      retirada: retirada,
-
-      entrega: entrega,
-
-      taxa: taxa,
-
-      comissao: comissao,
-
-      valorMotoboy: valorMotoboy,
-
-      observacao: observacao,
-
+      restaurante,
+      retirada,
+      entrega,
+      taxa,
+      comissao,
+      valorMotoboy,
+      observacao,
       status: "Disponível"
-
     };
 
     entregas.push(novaEntrega);
-
+    salvarEntregas();
     alert("Entrega criada com sucesso! 🚀");
 
     document.getElementById("restauranteNome").value = "";
@@ -527,151 +390,71 @@
     document.getElementById("entrega").value = "";
     document.getElementById("taxa").value = "";
     document.getElementById("observacao").value = "";
-
     document.getElementById("resumo").style.display = "none";
 
     mostrarEntregas();
   }
 
   function mostrarEntregas() {
-
-    const lista =
-      document.getElementById("listaEntregas");
-
+    carregarEntregas();
+    const lista = document.getElementById("listaEntregas");
     if (entregas.length === 0) {
-
-      lista.innerHTML = `
-        <div class="vazio">
-          Nenhuma entrega disponível no momento.
-        </div>
-      `;
-
+      lista.innerHTML = `<div class="vazio">Nenhuma entrega disponível no momento.</div>`;
       return;
     }
-
     lista.innerHTML = "";
-
-    entregas.forEach(function(item) {
-
-      const div =
-        document.createElement("div");
-
+    entregas.forEach(item => {
+      const div = document.createElement("div");
       div.className = "entrega";
-
       div.innerHTML = `
-
         <h3>📦 ${item.restaurante}</h3>
-
-        <p>
-          <strong>Retirada:</strong>
-          ${item.retirada}
-        </p>
-
-        <p>
-          <strong>Entrega:</strong>
-          ${item.entrega}
-        </p>
-
-        <p>
-          <strong>Pedido:</strong>
-          ${item.observacao || "Não informado"}
-        </p>
-
-        <div class="valor-motoboy">
-          🏍️ Você recebe:
-          ${formatarMoeda(item.valorMotoboy)}
-        </div>
-
-        <span class="status">
-          ${item.status}
-        </span>
-
-        ${
-          item.status === "Disponível"
-          ?
-          `
-          <button
-            class="btn"
-            onclick="aceitarEntrega(${item.id})">
-            🏍️ Aceitar entrega
-          </button>
-          `
-          :
-          item.status === "Aceita"
-          ?
-          `
-          <button
-            class="btn btn-dark"
-            onclick="finalizarEntrega(${item.id})">
-            ✅ Finalizar entrega
-          </button>
-          `
-          :
-          `
-          <p style="margin-top:12px; color:#168316; font-weight:bold;">
-            Entrega concluída ✅
-          </p>
-          `
+        <p><strong>Retirada:</strong> ${item.retirada}</p>
+        <p><strong>Entrega:</strong> ${item.entrega}</p>
+        <p><strong>Pedido:</strong> ${item.observacao || "Não informado"}</p>
+        <div class="valor-motoboy">🏍️ Você recebe: ${formatarMoeda(item.valorMotoboy)}</div>
+        <span class="status">${item.status}</span>
+        ${item.status === "Disponível"
+          ? `<button class="btn" onclick="aceitarEntrega(${item.id})">🏍️ Aceitar entrega</button>`
+          : item.status === "Aceita"
+          ? `<button class="btn btn-dark" onclick="finalizarEntrega(${item.id})">✅ Finalizar entrega</button>`
+          : `<p style="margin-top:12px; color:#168316; font-weight:bold;">Entrega concluída ✅</p>`
         }
-
       `;
-
       lista.appendChild(div);
-
     });
   }
 
   function aceitarEntrega(id) {
-
-    const entrega =
-      entregas.find(function(item) {
-        return item.id === id;
-      });
-
-    if (!entrega) {
-      return;
-    }
-
+    const entrega = entregas.find(item => item.id === id);
+    if (!entrega) return;
     entrega.status = "Aceita";
-
+    salvarEntregas();
     alert("Entrega aceita! 🏍️");
-
     mostrarEntregas();
   }
 
   function finalizarEntrega(id) {
-
-    const entrega =
-      entregas.find(function(item) {
-        return item.id === id;
-      });
-
-    if (!entrega) {
-      return;
-    }
-
+    const entrega = entregas.find(item => item.id === id);
+    if (!entrega) return;
     entrega.status = "Concluída";
-
-    alert(
-      "Entrega finalizada! ✅\n\n" +
-      "Você recebeu: " +
-      formatarMoeda(entrega.valorMotoboy)
-    );
-
+    salvarEntregas();
+    alert("Entrega finalizada! ✅\n\nVocê recebeu: " + formatarMoeda(entrega.valorMotoboy));
     mostrarEntregas();
   }
 
   function formatarMoeda(valor) {
-
-    return valor.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL"
-    });
-
+    return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
   }
 
+  function salvarEntregas() {
+    localStorage.setItem("motoflash_entregas", JSON.stringify(entregas));
+  }
+
+  function carregarEntregas() {
+    const dados = localStorage.getItem("motoflash_entregas");
+    if (dados) entregas = JSON.parse(dados);
+  }
 </script>
 
 </body>
 </html>
-<link rel="manifest" href="manifest.json">
